@@ -1,2 +1,2 @@
 # InvestmentChecker
-Telegram bot just for check prices of moex spb securities
+Telegram bot just for check prices of moex and spb securities
