@@ -1,25 +1,24 @@
 class User:
     def __init__(self, chat_id):
         self.chat_id = chat_id
-        self.tickers = []
+        self.stocks = []
     
 
-    def try_add_tickers(self, ticker):
+    def try_add_stock(self, stock):
         is_contain = False
-        for t in self.tickers:
-            if ticker.shortname == t.shortname:
-                t.needed_price = ticker.needed_price
+        for s in self.stocks:
+            if stock.ticker == s.ticker:
+                s.needed_price = stock.needed_price
                 is_contain = True
                 break
         if not is_contain:
-            self.tickers.append(ticker) 
-
+            self.stocks.append(stock) 
     
 
-    def try_delete_ticker(self, ticker):
-        for t in self.tickers:
-            if ticker.shortname == t.shortname:
-                self.tickers.pop(t)
+    def try_delete_stock(self, stock):
+        for s in self.stocks:
+            if stock.ticker == s.ticker:
+                self.stocks.pop(s)
                 break
 
 
@@ -35,12 +34,12 @@ class User:
         return newUser
             
 
-class Ticker:
+class Stock:
     def __init__(self, name, price):
         self.name = name
         self.needed_price = price
-        self.shortname = self.name  #TODO
+        self.ticker = self.name  #TODO
 
 
     def is_it_correct(self):
-        return True if self.shortname != None else False
+        return True if self.ticker != None else False
