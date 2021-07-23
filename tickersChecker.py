@@ -13,10 +13,14 @@ def call_repeatedly(interval, func, *args):
 def check_tickers():
     codes = Code.select(Code.code)
     for code in codes:
+        if (code.count == 0):
+            code.delete_instance()
+            continue
         tickers = check_code(code.code)
         change_code(code.code, -tickers.cursor.rowcount)
         for ticker in tickers:
             ticker.delete_instance()
+        yield tickers 
         
 def check_code(code):
 

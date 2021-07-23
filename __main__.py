@@ -1,8 +1,8 @@
 import re
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler
 from telegram import ReplyKeyboardMarkup
-from modules import *    
-
+from modules import *   
+import tickersChecker
 
 def start(update, context):
     User.get_user(update.effective_chat.id, users)
@@ -60,6 +60,11 @@ def cancel(update, context):
     return ConversationHandler.END
 
 
+def send_messages(tickers):
+    for ticker in tickers:
+        updater.bot.send_message(chat_id=ticker.id, text=f'Check {ticker.code}')
+
+
 users = []
 
 token = '1911743302:AAGCO3OdegMhOgONyK-uq8jPqipsZW-PCoA'
@@ -87,3 +92,5 @@ conv_handler = ConversationHandler(
 dp.add_handler(conv_handler)
 updater.start_polling()
 updater.idle()
+
+tickersChecker.call_repeatedly(5 ,tickersChecker.check_tickers) #SetInterval

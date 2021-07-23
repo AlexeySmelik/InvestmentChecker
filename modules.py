@@ -1,3 +1,5 @@
+from DBoperator import insert_ticker
+
 class User:
     def __init__(self, chat_id):
         self.chat_id = chat_id
@@ -40,6 +42,13 @@ class User:
             
 
 class Stock:
+    test = {
+        'YANDEX':'YNDX',
+        'YNDX': 'YNDX',
+        'GAZPROM': 'GAZP',
+        'GAZP' : 'GAZP'
+    }
+
     def __init__(self, name, price = 54):
         self.name = name.upper()
         self.needed_price = price
@@ -51,6 +60,7 @@ class Stock:
         for u in self.users:
             if user.chat_id == u.chat_id:
                 return False
+        insert_ticker(user.chat_id, self.ticker, self.needed_price)
         self.users.append(user)
         return True
 

@@ -6,10 +6,9 @@ def insert_ticker(id,code,cost):
         change_code(code, 1)
     Ticker.set_by_id( (id,code) , {Ticker.cost : cost})
 
- 
+
 def main():
-    insert_ticker(1, 'AAPL', 20)
-    check_tickers()
+    pass
     
 
 
