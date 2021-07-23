@@ -11,18 +11,18 @@ class BaseModel(pw.Model):
                 database = "uroki",
             )
 
-class Ticker(BaseModel):
-    id = pw.IntegerField(column_name='id')
-    code = pw.CharField(max_length= 4, column_name='code')
-    cost = pw.FloatField(column_name='cost')
+class Stocks(BaseModel):
+    chat_id = pw.IntegerField(column_name='chat_id')
+    ticker = pw.CharField(max_length= 4, column_name='ticker')
+    needed_price = pw.FloatField(column_name='needed_price')
 
     class Meta:
-        primary_key = pw.CompositeKey('id', 'code')
-        table_name = 'tickers'
+        primary_key = pw.CompositeKey('chat_id', 'ticker')
+        table_name = 'Stocks'
 
-class Code(BaseModel):
-    code = pw.CharField(max_length=4, column_name='code', primary_key=True)
+class Tickers(BaseModel):
+    name = pw.CharField(max_length=4, column_name='name', primary_key=True)
     count = pw.IntegerField(column_name='count')
 
     class Meta:
-        table_name = 'codes'
+        table_name = 'Tickers'
