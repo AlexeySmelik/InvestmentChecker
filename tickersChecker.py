@@ -10,17 +10,19 @@ def call_repeatedly(interval, func, *args):
     Thread(target=loop).start()    
     return stopped.set
 
-def check_tickers():
-    codes = Code.select(Code.code)
+def check_tickers(message):
+    print(1)
+    codes = Code.select()
     for code in codes:
         if (code.count == 0):
+            print("kill "+ code.code)
             code.delete_instance()
             continue
         tickers = check_code(code.code)
-        change_code(code.code, -tickers.cursor.rowcount)
         for ticker in tickers:
+            change_code(ticker.code, -1)
             ticker.delete_instance()
-        yield tickers 
+        message(tickers)
         
 def check_code(code):
 

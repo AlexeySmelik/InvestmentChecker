@@ -61,6 +61,7 @@ def cancel(update, context):
 
 
 def send_messages(tickers):
+    
     for ticker in tickers:
         updater.bot.send_message(chat_id=ticker.id, text=f'Check {ticker.code}')
 
@@ -90,7 +91,9 @@ conv_handler = ConversationHandler(
     allow_reentry=True
 )
 dp.add_handler(conv_handler)
+
+tickersChecker.call_repeatedly(5 ,tickersChecker.check_tickers, send_messages) #SetInterval
+
 updater.start_polling()
 updater.idle()
 
-tickersChecker.call_repeatedly(5 ,tickersChecker.check_tickers) #SetInterval
