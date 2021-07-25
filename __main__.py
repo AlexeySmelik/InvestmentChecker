@@ -1,11 +1,9 @@
-import re
-from multiprocessing import Pool
+import stocksChecker, re, config
 import strings as s
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler
 from telegram import ReplyKeyboardMarkup
 from modules import *   
-import stocksChecker
-import config
+
 
 def start(update, context):
     reply_keyboard = [['Add securities', 'Check bag', 'Remove securities']]
@@ -18,7 +16,7 @@ def request_stocks_to_add(update, context):
     return 2
 
 
-def get_stocks_to_add(update, context):  #TODO
+def get_stocks_to_add(update, context):
     user = User(update.effective_chat.id)
     for _ in re.findall(r'\w+\-\d+', update.message.text.replace(' ', '')):
         name, cost = _.split('-')
@@ -35,7 +33,7 @@ def request_stocks_to_remove(update, context):
     return 3
 
 
-def get_stocks_to_remove(update, context):  #TODO
+def get_stocks_to_remove(update, context):
     user = User(update.effective_chat.id)
     user.delete_user_stocks(re.findall(r'\w+', update.message.text.replace(' ', '')))
     update.message.reply_text(s.gg_message)
@@ -59,7 +57,6 @@ def cancel(update, context):
 def send_messages(stocks):
     for stock in stocks:
         updater.bot.send_message(chat_id= stock.chat_id, text=f'Check {stock.ticker}')
-
 
 
 updater = Updater(token=config.token, use_context=True)
