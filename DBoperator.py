@@ -1,4 +1,4 @@
-from Stocks import * 
+from Tables import * 
 from stocksChecker import * 
 
 def insert_ticker(chat_id, ticker, needed_price):

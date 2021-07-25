@@ -1,5 +1,5 @@
 from threading import Event, Thread
-from Stocks import * 
+from Tables import * 
 import requests
 
 def call_repeatedly(interval, func, *args):
@@ -13,7 +13,6 @@ def call_repeatedly(interval, func, *args):
 def check_tickers(message):
     tickers = Tickers.select()
     for ticker in tickers:
-        print(ticker.count)
         if (ticker.count == 0):
             ticker.delete_instance()
             continue
@@ -25,12 +24,12 @@ def check_tickers(message):
         
 def check_ticker(ticker):
 
-    close= requests.get(config.url + ticker).json()['close'].replace(',','.')
+    close = requests.get(config.url + ticker).json()['close'].replace(',','.').encode('ascii', 'ignore')
 
-    return Stocks.select().where(Stocks.ticker == ticker and Stocks.needed_price < close).execute()
+    return Stocks.select().where(Stocks.ticker == ticker and Stocks.needed_price < float(close)).execute()
 
 def change_ticker(name, count):
     ticker = Tickers.get_or_create(name = name)[0]
-    temp = ticker.count + count if ticker.count else count  
-    Tickers.set_by_id(name, {'count': temp})
+    new_count = ticker.count + count if ticker.count else count  
+    Tickers.set_by_id(name, {'count': new_count})
 
