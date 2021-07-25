@@ -24,7 +24,7 @@ def get_stocks_to_add(update, context):
         if not user.try_add_stock(stock):
             update.message.reply_text(f'Mission failed on {stock.name}. Try again')
             return 2
-    update.message.reply_text(s.gg_message)
+        update.message.reply_text(f'Mission complete on {stock.name} : ticker: {stock.ticker}')
     return ConversationHandler.END
 
 

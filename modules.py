@@ -40,7 +40,6 @@ class Stock:
         resp = requests.get(url, headers=headers)
         soup = BS(resp.content, "html.parser")
         res = soup.find('span', {'class' : 'WuDkNe'})
-        print(res.text)
         return res.text if res else None
 
 

@@ -2,4 +2,3 @@ start_message = 'I\'m a bot, I can check securitie\'s price and tell you when th
 request_to_add_message = 'Talk to me your securities. Please use this format (Name - Wanted price):\nName1 - 54\nName2 - 17'
 request_to_del_message = 'Talk to me your securities to remove. Please use this format (Name):\nName1\nName2'
 cancel_message = 'I hope we can talk again some day.'
-gg_message = 'Mission complete'
