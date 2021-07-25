@@ -23,7 +23,7 @@ def check_tickers(message):
         message(stocks)
         
 def check_ticker(ticker):
-
+    
     close = requests.get(config.url + ticker).json()['close'].replace(',','.').encode('ascii', 'ignore')
 
     return Stocks.select().where(Stocks.ticker == ticker and Stocks.needed_price < float(close)).execute()
