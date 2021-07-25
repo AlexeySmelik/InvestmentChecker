@@ -1,4 +1,5 @@
 import requests
+import config
 from DBoperator import insert_ticker, get_stocks, delete_stocks
 from bs4 import BeautifulSoup as BS
 from functools import lru_cache
@@ -33,13 +34,13 @@ class Stock:
 
 
     @lru_cache
-    def get_ticker(name):
-        url = f'https://yandex.ru/search/?text="{name} акция"'
-        headers = {"user-agent" : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36"}
-        html_doc = requests.get(url, headers=headers).content
-        soup = BS(html_doc, 'html.parser')
-        result = soup.find('span', {'class' : 'StocksHeader-Ticker'})
-        return result[0].get_text() if len(result) == 0 else None
+    def get_ticker(name):        
+        url = f"https://google.com/search?q={name}+акция"
+        headers = {"user-agent" : config.user_agent}
+        resp = requests.get(url, headers=headers)
+        soup = BS(resp.content, "html.parser")
+        res = soup.find('span', {'class' : 'WuDkNe'})
+        return res.text if res else None
 
 
     def is_it_correct(self):
