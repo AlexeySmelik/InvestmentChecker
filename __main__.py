@@ -36,7 +36,7 @@ def request_stocks_to_remove(update, context):
 def get_stocks_to_remove(update, context):
     user = User(update.effective_chat.id)
     user.delete_user_stocks(re.findall(r'\w+', update.message.text.replace(' ', '')))
-    update.message.reply_text(s.gg_message)
+    update.message.reply_text('GG!')
     return ConversationHandler.END
 
 

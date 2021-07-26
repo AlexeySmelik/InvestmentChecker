@@ -19,10 +19,4 @@ class Stocks(BaseModel):
     class Meta:
         primary_key = pw.CompositeKey('chat_id', 'ticker')
         table_name = 'Stocks'
-
-class Tickers(BaseModel):
-    name = pw.CharField(max_length=4, column_name='name', primary_key=True)
-    count = pw.IntegerField(column_name='count')
-
-    class Meta:
-        table_name = 'Tickers'
+        

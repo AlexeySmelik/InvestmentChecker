@@ -22,8 +22,8 @@ class User:
     
 
     def delete_user_stocks(self, stocks):
-        correct_stocks = list(filter(None, map(lambda x: Stock(x).ticker, stocks)))
-        delete_stocks(self.chat_id, correct_stocks)
+        correct_tickers = list(filter(None, map(lambda x: Stock(x).ticker, stocks)))
+        delete_stocks(self.chat_id, correct_tickers)
         
 
 class Stock:
@@ -39,7 +39,7 @@ class Stock:
         headers = {"user-agent" : config.user_agent}
         resp = requests.get(url, headers=headers)
         soup = BS(resp.content, "html.parser")
-        res = soup.find('span', {'class' : 'WuDkNe'})
+        res = soup.select(config.ticker)[0]
         return res.text if res else None
 
 
