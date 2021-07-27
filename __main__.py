@@ -41,11 +41,12 @@ def get_stocks_to_remove(update, context):
 
 
 def show_bag(update, context):
-    """user = User(update.effective_chat.id)
-    output = 'Your securities to check:\n' if user.stocks else 'Empty'
-    for stock in user.stocks:
-        output += f'Name: {stock.name} and needed price: {stock.needed_price}\n'
-    update.message.reply_text(output)"""
+    user = User(update.effective_chat.id)
+    user_stocks = user.get_user_stocks()
+    output = 'Your securities to check:\n' if user_stocks else 'Empty'
+    for stock in user_stocks:
+        output += f'Ticker: {stock.ticker} and needed price: {stock.needed_price}\n'
+    update.message.reply_text(output)
     return ConversationHandler.END
 
 

@@ -13,7 +13,7 @@ class BaseModel(pw.Model):
 
 class Stocks(BaseModel):
     chat_id = pw.IntegerField(column_name='chat_id')
-    ticker = pw.CharField(max_length= 4, column_name='ticker')
+    ticker = pw.CharField(max_length= 10, column_name='ticker')
     needed_price = pw.FloatField(column_name='needed_price')
 
     class Meta:

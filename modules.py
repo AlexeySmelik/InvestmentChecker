@@ -39,8 +39,8 @@ class Stock:
         headers = {"user-agent" : config.user_agent}
         resp = requests.get(url, headers=headers)
         soup = BS(resp.content, "html.parser")
-        res = soup.select(config.ticker)[0]
-        return res.text if res else None
+        res = soup.select(config.ticker)
+        return res[0].text if res else None
 
 
     def is_it_correct(self):

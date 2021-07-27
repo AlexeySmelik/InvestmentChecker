@@ -24,16 +24,12 @@ def pop_stocks(ticker):
     Stocks.delete().where(Stocks.ticker == ticker and Stocks.needed_price < float(close)).execute()
     return stocks
 
-def change_ticker(name, count):
-    ticker = Tickers.get_or_create(name = name)[0]
-    new_count = ticker.count + count if ticker.count else count  
-    Tickers.set_by_id(name, {'count': new_count})
 
 def get_cost(name):        
-        url = f"https://google.com/search?q={name}+акция"
-        headers = {"user-agent" : config.user_agent}
-        resp = requests.get(url, headers=headers)
-        soup = BS(resp.content, "html.parser")
-        res = soup.select(config.cost)[0]
-        return res.text if res else None
+    url = f"https://google.com/search?q={name}+акция"
+    headers = {"user-agent" : config.user_agent}
+    resp = requests.get(url, headers=headers)
+    soup = BS(resp.content, "html.parser")
+    res = soup.select(config.cost)
+    return res[0].text if res else None
 
