@@ -2,14 +2,16 @@ import peewee as pw
 from playhouse.mysql_ext import MySQLConnectorDatabase
 import config
 
+
 class BaseModel(pw.Model):
     class Meta:
         database = MySQLConnectorDatabase(
-                host = "localhost",
-                user = config.user,
-                password = config.password,
-                database = "uroki",
+                host = config.db_host,
+                user = config.db_user,
+                password = config.db_password,
+                database = config.db_name,
             )
+
 
 class Stocks(BaseModel):
     chat_id = pw.IntegerField(column_name='chat_id')
@@ -19,4 +21,3 @@ class Stocks(BaseModel):
     class Meta:
         primary_key = pw.CompositeKey('chat_id', 'ticker')
         table_name = 'Stocks'
-        

@@ -87,4 +87,3 @@ stocksChecker.call_repeatedly(config.interval, stocksChecker.check_tickers, send
 
 updater.start_polling()
 updater.idle()
-

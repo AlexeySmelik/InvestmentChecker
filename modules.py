@@ -39,7 +39,7 @@ class Stock:
         headers = {"user-agent" : config.user_agent}
         resp = requests.get(url, headers=headers)
         soup = BS(resp.content, "html.parser")
-        res = soup.select(config.ticker)
+        res = soup.select('g-card-section:last-child > div:not([aria-level]) > div:last-child > div > span:last-child')
         return res[0].text if res else None
 
 
