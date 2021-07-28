@@ -16,7 +16,8 @@ def get_stocks(chat_id):
 
 def main():
     Stocks.create_table()
-    
+    #insert_ticker(1, 'GOOGL', 228)
+
 
 if __name__ == "__main__":
     main()
