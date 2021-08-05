@@ -1,6 +1,6 @@
+import requests
 from threading import Event, Thread
 from Tables import * 
-import requests
 from bs4 import BeautifulSoup as BS
 
 
@@ -34,4 +34,3 @@ def get_cost(name):
     soup = BS(resp.content, "html.parser")
     res = soup.select('g-card-section:last-child > div:not([aria-level]) > div > span > span > span')
     return res[0].text if res else None
-

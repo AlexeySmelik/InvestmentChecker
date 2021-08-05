@@ -1,2 +1,2 @@
 # InvestmentChecker
-Telegram bot just for check prices of securities
+Telegram bot just for check prices of stocks

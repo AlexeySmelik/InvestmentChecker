@@ -1,8 +1,8 @@
 import stocksChecker, re, config
 import strings as s
+import stocksDBoperator as dboper
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler
 from telegram import ReplyKeyboardMarkup
-from modules import *   
 
 
 def start(update, context):
@@ -17,14 +17,13 @@ def request_stocks_to_add(update, context):
 
 
 def get_stocks_to_add(update, context):
-    user = User(update.effective_chat.id)
+    chat_id = update.effective_chat.id
     for _ in re.findall(r'\w+\-\d+', update.message.text.replace(' ', '')):
-        name, cost = _.split('-')
-        stock = Stock(name, cost)
-        if not user.try_add_stock(stock):
-            update.message.reply_text(f'Mission failed on {stock.name}. Try again')
+        name, needed_price = _.split('-')
+        if not dboper.try_add_stock(chat_id, name, needed_price):
+            update.message.reply_text(f'Mission failed on {name}. Try again')
             return 2
-        update.message.reply_text(f'Mission complete on {stock.name} : ticker: {stock.ticker}')
+        update.message.reply_text(f'Mission complete on {name}')
     return ConversationHandler.END
 
 
@@ -34,15 +33,15 @@ def request_stocks_to_remove(update, context):
 
 
 def get_stocks_to_remove(update, context):
-    user = User(update.effective_chat.id)
-    user.delete_user_stocks(re.findall(r'\w+', update.message.text.replace(' ', '')))
-    update.message.reply_text('GG!')
+    chat_id = update.effective_chat.id
+    dboper.delete_user_stocks(chat_id, re.findall(r'\w+', update.message.text.replace(' ', '')))
+    update.message.reply_text('Mission complete')
     return ConversationHandler.END
 
 
 def show_bag(update, context):
-    user = User(update.effective_chat.id)
-    user_stocks = user.get_user_stocks()
+    chat_id = update.effective_chat.id
+    user_stocks = dboper.get_user_stocks(chat_id)
     output = 'Your securities to check:\n' if user_stocks else 'Empty'
     for stock in user_stocks:
         output += f'Ticker: {stock.ticker} and needed price: {stock.needed_price}\n'
